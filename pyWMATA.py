@@ -1,4 +1,4 @@
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 from xml.dom.minidom import parseString
 
 class WMATA(object):
@@ -8,42 +8,42 @@ class WMATA(object):
                                 'F01':('RD','YL','GR'), 'A01':('BL','SV','OR','RD'), 'C01':('BL','SV','OR','RD'), 'D08':('SV','BL','OR'), 'C05':('BL','SV','OR'),
                                 'K05':('OR','SV'), 'B06':('RD','YL','GR'), 'E06':('RD','YL','GR')}
         self.database = {
-                            'RD':[('A15', u'Shady Grove'), ('A14', u'Rockville'), ('A13', u'Twinbrook'), ('A12', u'White Flint'), ('A11', u'Grosvenor'),
-                                    ('A10', u'Medical Center'), ('A09', u'Bethesda'), ('A08', u'Friendship Heights'), ('A07', u'Tenleytown'),
-                                    ('A06', u'Van Ness UDC'), ('A05', u'Cleveland Park'), ('A04', u'Woodley Park Zoo'), ('A03', u'Dupont Circle'),
-                                    ('A02', u'Farragut North'), ('A01', u'Metro Center'), ('B01', u'Gallery Place'),('B02', u'Judiciary Square'),
-                                    ('B03', u'Union Station'), ('B35', u'New York Avenue'), ('B04', u'Rhode Island Avenue'), ('B05', u'Brookland'),
-                                    ('B06', u'Fort Totten'), ('B07', u'Takoma'), ('B08', u'Silver Spring'), ('B09', u'Forest Glen'), ('B10', u'Wheaton'),
-                                    ('B11', u'Glenmont')],
-                            'YL':[('C15', u'Huntington'), ('C14', u'Eisenhower Avenue'), ('C13', u'King Street'), ('C12', u'Braddock Road'),
-                                    ('C10', u'National Arpt'), ('C09', u'Crystal City'), ('C08', u'Pentagon City'), ('C07', u'Pentagon'),
-                                    ('F03', u"L'Enfant Plaza"), ('F02', u'Archives'), ('F01', u'Gallery Place'), ('E01', u'Mt Vernon Sq'), ('E02', u'Shaw'),
-                                    ('E03', u'U Street'), ('E04', u'Columbia Heights'), ('E05', u'Georgia Avenue'), ('E06', u'Fort Totten')],
-                            'BL':[('J03', u"Franconia-Springf'ld"), ('J02', u'Van Dorn St'),('C13', u'King Street'), ('C12', u'Braddock Road'),
-                                    ('C10', u'National Arpt'), ('C09', u'Crystal City'), ('C08', u'Pentagon City'), ('C07', u'Pentagon'),
-                                    ('C06', u'Arlington Cemetery'), ('C05', u'Rosslyn'), ('C04', u'Foggy Bottom'), ('C03', u'Farragut West'),
-                                    ('C02', u'McPherson Square'), ('C01', u'Metro Center'), ('D01', u'Federal Triangle'), ('D02', u'Smithsonian'),
-                                    ('D03', u"L'Enfant Plaza"), ('D04', u'Federal Center SW'), ('D05', u'Capitol South'), ('D06', u'Eastern Market'),
-                                    ('D07', u'Potomac Avenue'), ('D08', u'Stadium Armory'), ('G01', u'Benning Road'), ('G02', u'Capitol Heights'),
-                                    ('G03', u'Addison Road'), ('G04', u'Morgan Blvd'), ('G05', u'Largo Town Center')],
-                            'GR':[('E10', u'Greenbelt'), ('E09', u'College Park'), ('E08', u'Prince Georges Plaza'), ('E07', u'West Hyattsville'),
-                                    ('E06', u'Fort Totten'), ('E05', u'Georgia Avenue'), ('E04', u'Columbia Heights'), ('E03', u'U Street'), ('E02', u'Shaw'),
-                                    ('E01', u'Mt Vernon Sq'), ('F01', u'Gallery Place'), ('F02', u'Archives'), ('F03', u"L'Enfant Plaza"),
-                                    ('F04', u'Waterfront'), ('F05', u'Navy Yard'), ('F06', u'Anacostia'), ('F07', u'Congress Height'), ('F08', u'Southern Ave'),
-                                    ('F09', u'Naylor Road'), ('F10', u'Suitland'), ('F11', u'Branch Avenue')],
-                            'OR':[('D13', u'New Carrollton'), ('D12', u'Landover'), ('D11', u'Cheverly'), ('D10', u'Deanwood'), ('D09', u'Minnesota Avenue'),
-                                    ('D08', u'Stadium Armory'), ('D07', u'Potomac Avenue'), ('D06', u'Eastern Market'), ('D05', u'Capitol South'),
-                                    ('D04', u'Federal Center SW'), ('D03', u"L'Enfant Plaza"), ('D02', u'Smithsonian'), ('D01', u'Federal Triangle'),
-                                    ('C01', u'Metro Center'), ('C02', u'McPherson Square'), ('C03', u'Farragut West'), ('C04', u'Foggy Bottom'),
-                                    ('C05', u'Rosslyn'), ('K01', u'Court House'), ('K02', u'Clarendon'), ('K03', u'Virginia Square'), ('K04', u'Ballston'),
-                                    ('K05', u'E Falls Church'), ('K06', u'W Falls Church'), ('K07', u'Dunn Loring'), ('K08', u'Vienna')],
-                            'SV':[('G05', u'Largo Town Center'), ('G04', u'Morgan Blvd'), ('G03', u'Addison Road'), ('G02', u'Capitol Heights'),
-                                    ('G01', u'Benning Road'), ('D08', u'Stadium Armory'), ('D07', u'Potomac Avenue'), ('D06', u'Eastern Market'),
-                                    ('D05', u'Capitol South'), ('D04', u'Federal Center SW'), ('D03', u"L'Enfant Plaza"), ('D02', u'Smithsonian'),
-                                    ('D01', u'Federal Triangle'), ('C01', u'Metro Center'), ('C02', u'McPherson Square'), ('C03', u'Farragut West'),
-                                    ('C04', u'Foggy Bottom'), ('C05', u'Rosslyn'), ('K01', u'Court House'), ('K02', u'Clarendon'), ('K03', u'Virginia Square'),
-                                    ('K04', u'Ballston'), ('K05', u'E Falls Church'), ('N01', u'McLean'), ('N02', u'Tysons Corner'), ('N03', u'Greensboro'),
-                                    ('N04', u'Spring Hill'), ('N06', u'Wiehle-Reston East')]
+                            'RD':[('A15', 'Shady Grove'), ('A14', 'Rockville'), ('A13', 'Twinbrook'), ('A12', 'White Flint'), ('A11', 'Grosvenor'),
+                                    ('A10', 'Medical Center'), ('A09', 'Bethesda'), ('A08', 'Friendship Heights'), ('A07', 'Tenleytown'),
+                                    ('A06', 'Van Ness UDC'), ('A05', 'Cleveland Park'), ('A04', 'Woodley Park Zoo'), ('A03', 'Dupont Circle'),
+                                    ('A02', 'Farragut North'), ('A01', 'Metro Center'), ('B01', 'Gallery Place'),('B02', 'Judiciary Square'),
+                                    ('B03', 'Union Station'), ('B35', 'New York Avenue'), ('B04', 'Rhode Island Avenue'), ('B05', 'Brookland'),
+                                    ('B06', 'Fort Totten'), ('B07', 'Takoma'), ('B08', 'Silver Spring'), ('B09', 'Forest Glen'), ('B10', 'Wheaton'),
+                                    ('B11', 'Glenmont')],
+                            'YL':[('C15', 'Huntington'), ('C14', 'Eisenhower Avenue'), ('C13', 'King Street'), ('C12', 'Braddock Road'),
+                                    ('C10', 'National Arpt'), ('C09', 'Crystal City'), ('C08', 'Pentagon City'), ('C07', 'Pentagon'),
+                                    ('F03', "L'Enfant Plaza"), ('F02', 'Archives'), ('F01', 'Gallery Place'), ('E01', 'Mt Vernon Sq'), ('E02', 'Shaw'),
+                                    ('E03', 'U Street'), ('E04', 'Columbia Heights'), ('E05', 'Georgia Avenue'), ('E06', 'Fort Totten')],
+                            'BL':[('J03', "Franconia-Springf'ld"), ('J02', 'Van Dorn St'),('C13', 'King Street'), ('C12', 'Braddock Road'),
+                                    ('C10', 'National Arpt'), ('C09', 'Crystal City'), ('C08', 'Pentagon City'), ('C07', 'Pentagon'),
+                                    ('C06', 'Arlington Cemetery'), ('C05', 'Rosslyn'), ('C04', 'Foggy Bottom'), ('C03', 'Farragut West'),
+                                    ('C02', 'McPherson Square'), ('C01', 'Metro Center'), ('D01', 'Federal Triangle'), ('D02', 'Smithsonian'),
+                                    ('D03', "L'Enfant Plaza"), ('D04', 'Federal Center SW'), ('D05', 'Capitol South'), ('D06', 'Eastern Market'),
+                                    ('D07', 'Potomac Avenue'), ('D08', 'Stadium Armory'), ('G01', 'Benning Road'), ('G02', 'Capitol Heights'),
+                                    ('G03', 'Addison Road'), ('G04', 'Morgan Blvd'), ('G05', 'Largo Town Center')],
+                            'GR':[('E10', 'Greenbelt'), ('E09', 'College Park'), ('E08', 'Prince Georges Plaza'), ('E07', 'West Hyattsville'),
+                                    ('E06', 'Fort Totten'), ('E05', 'Georgia Avenue'), ('E04', 'Columbia Heights'), ('E03', 'U Street'), ('E02', 'Shaw'),
+                                    ('E01', 'Mt Vernon Sq'), ('F01', 'Gallery Place'), ('F02', 'Archives'), ('F03', "L'Enfant Plaza"),
+                                    ('F04', 'Waterfront'), ('F05', 'Navy Yard'), ('F06', 'Anacostia'), ('F07', 'Congress Height'), ('F08', 'Southern Ave'),
+                                    ('F09', 'Naylor Road'), ('F10', 'Suitland'), ('F11', 'Branch Avenue')],
+                            'OR':[('D13', 'New Carrollton'), ('D12', 'Landover'), ('D11', 'Cheverly'), ('D10', 'Deanwood'), ('D09', 'Minnesota Avenue'),
+                                    ('D08', 'Stadium Armory'), ('D07', 'Potomac Avenue'), ('D06', 'Eastern Market'), ('D05', 'Capitol South'),
+                                    ('D04', 'Federal Center SW'), ('D03', "L'Enfant Plaza"), ('D02', 'Smithsonian'), ('D01', 'Federal Triangle'),
+                                    ('C01', 'Metro Center'), ('C02', 'McPherson Square'), ('C03', 'Farragut West'), ('C04', 'Foggy Bottom'),
+                                    ('C05', 'Rosslyn'), ('K01', 'Court House'), ('K02', 'Clarendon'), ('K03', 'Virginia Square'), ('K04', 'Ballston'),
+                                    ('K05', 'E Falls Church'), ('K06', 'W Falls Church'), ('K07', 'Dunn Loring'), ('K08', 'Vienna')],
+                            'SV':[('G05', 'Largo Town Center'), ('G04', 'Morgan Blvd'), ('G03', 'Addison Road'), ('G02', 'Capitol Heights'),
+                                    ('G01', 'Benning Road'), ('D08', 'Stadium Armory'), ('D07', 'Potomac Avenue'), ('D06', 'Eastern Market'),
+                                    ('D05', 'Capitol South'), ('D04', 'Federal Center SW'), ('D03', "L'Enfant Plaza"), ('D02', 'Smithsonian'),
+                                    ('D01', 'Federal Triangle'), ('C01', 'Metro Center'), ('C02', 'McPherson Square'), ('C03', 'Farragut West'),
+                                    ('C04', 'Foggy Bottom'), ('C05', 'Rosslyn'), ('K01', 'Court House'), ('K02', 'Clarendon'), ('K03', 'Virginia Square'),
+                                    ('K04', 'Ballston'), ('K05', 'E Falls Church'), ('N01', 'McLean'), ('N02', 'Tysons Corner'), ('N03', 'Greensboro'),
+                                    ('N04', 'Spring Hill'), ('N06', 'Wiehle-Reston East')]
                         }
 
     def getDirections(self, startStationCode, endStationCode):
@@ -109,7 +109,7 @@ class WMATA(object):
 
     def getLines(self, stationCode, *recursion):
         lines = []
-        for key,value in self.database.iteritems():
+        for key,value in self.database.items():
             for code in value:
                 if stationCode == code[0]:
                     lines.append(key)
@@ -144,7 +144,7 @@ class WMATA(object):
                 if startLine == endLine:
                     return self._getPathSameLine_(startStationCode, endStationCode)
         transferLocations = []
-        for key,value in self.transferStations.iteritems():
+        for key,value in self.transferStations.items():
             for startLine in startLines:
                 for endLine in endLines:
                     if startLine in value:
@@ -279,11 +279,11 @@ class WMATA(object):
         attempts = 0
         while attempts < 30: #Loop 30 times because the WMATA API sometimes just doesn't respond...
             try:
-                xml = urllib2.urlopen(url + 'api_key=' + self.apikey + '&subscription-key=' + self.apikey)
+                xml = urllib.request.urlopen(url + 'api_key=' + self.apikey + '&subscription-key=' + self.apikey)
                 return parseString(xml.read())
             except:
                 attempts += 1
-        print "Network communication error"
+        print("Network communication error")
         exit(1)
 
     def getNearestStation(self, lat, lon):
